@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, PermissionFlagsBits } = require("discord.js");
-const { ensureTablesExist } = require("../../utils/databaseUtils");
+const { ensureTablesExist } = require("../utils/databaseUtils");
 const { database } = require("../../utils/database");
 
 ensureTablesExist();
@@ -98,7 +98,7 @@ module.exports = {
     const channel = interaction.options.getChannel("channel");
     const guildId = interaction.guild.id;
 
-    if (!channel.isTextBased()) {
+    if (!channel || !channel.isTextBased()) {
       return interaction.reply({
         content: "❌ You must select a **text channel**.",
         ephemeral: true,
@@ -119,5 +119,6 @@ module.exports = {
 
   getLastPostedImage,
   saveLastPostedImage,
+  getWalltakerSettings,
   modulePath: __filename,
 };

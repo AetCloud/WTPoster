@@ -13,6 +13,7 @@ const {
 const {
   getLastPostedImage,
   saveLastPostedImage,
+  getWalltakerSettings,
 } = require("./commands/setwalltaker.js");
 
 const TOKEN = process.env.TOKEN;
@@ -79,7 +80,7 @@ async function fetchWalltakerSettings() {
 }
 
 async function postWalltakerImages() {
-  const settings = await fetchWalltakerSettings();
+  const settings = await getWalltakerSettings();
 
   for (const { guild_id, feed_id, channel_id } of settings) {
     try {
@@ -147,7 +148,7 @@ async function postWalltakerImages() {
 }
 
 async function monitorWalltakerChanges() {
-  const settings = await fetchWalltakerSettings();
+  const settings = await getWalltakerSettings();
 
   for (const { guild_id, feed_id } of settings) {
     try {
@@ -171,6 +172,7 @@ async function monitorWalltakerChanges() {
 client.once("ready", async () => {
   console.log("✅ Bot is fully loaded and ready to go!");
   console.log("🕵️‍♂️ Starting Walltaker image monitoring...");
+  await ensureTablesExist();
   setInterval(monitorWalltakerChanges, 30 * 1000);
   setInterval(postWalltakerImages, 15 * 60 * 1000);
 });
