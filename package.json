@@ -4,7 +4,9 @@
   "description": "A Discord bot for posting Walltaker images.",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "deploy-commands": "node deploy-commands.js",
+    "postdeploy": "npm run deploy-commands"
   },
   "dependencies": {
     "cors": "^2.8.5",
