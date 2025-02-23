@@ -1,4 +1,4 @@
-const fetch = require("node-fetch");
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
 async function fetchWalltakerImage(feedId) {
   const apiUrl = `https://walltaker.joi.how/api/links/${feedId}.json`;
