@@ -1,0 +1,17 @@
+{
+  "name": "wtposter",
+  "version": "1.0.0",
+  "description": "A Discord bot for posting Walltaker images.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "discord.js": "^14.18.0",
+    "mysql2": "^3.12.0",
+    "cors": "^2.8.5"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
