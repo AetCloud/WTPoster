@@ -81,6 +81,10 @@ async function fetchWalltakerSettings() {
 
 async function postWalltakerImages() {
   const settings = await getWalltakerSettings();
+  if (!settings.length) {
+    console.log("⚠️ No Walltaker settings found.");
+    return;
+  }
 
   for (const { guild_id, feed_id, channel_id } of settings) {
     try {
@@ -149,6 +153,10 @@ async function postWalltakerImages() {
 
 async function monitorWalltakerChanges() {
   const settings = await getWalltakerSettings();
+  if (!settings.length) {
+    console.log("⚠️ No Walltaker settings found.");
+    return;
+  }
 
   for (const { guild_id, feed_id } of settings) {
     try {

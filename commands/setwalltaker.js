@@ -19,16 +19,13 @@ async function setWalltakerSettings(guildId, feedId, channelId) {
   }
 }
 
-async function getWalltakerSettings(guildId) {
+async function getWalltakerSettings() {
   try {
-    const [rows] = await database.execute(
-      "SELECT feed_id, channel_id FROM walltaker_settings WHERE guild_id = ?",
-      [guildId]
-    );
-    return rows.length > 0 ? rows[0] : null;
+    const [rows] = await database.execute("SELECT * FROM walltaker_settings;");
+    return rows.length > 0 ? rows : [];
   } catch (error) {
     console.error("❌ MySQL Error (getWalltakerSettings):", error);
-    return null;
+    return [];
   }
 }
 
