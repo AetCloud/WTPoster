@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, PermissionFlagsBits } = require("discord.js");
 const { ensureTablesExist } = require("../utils/databaseUtils");
-const { database } = require("../utils/database"); // Corrected path
+const { database } = require("../utils/database");
 
 ensureTablesExist();
 
