@@ -37,6 +37,16 @@ module.exports = {
       console.log(
         `✅ Successfully registered ${client.commands.size} global commands.`
       );
+
+      const guildId = "1146990138656825415";
+      await rest.put(
+        Routes.applicationGuildCommands(process.env.CLIENT_ID, guildId),
+        { body: commands }
+      );
+
+      console.log(
+        `✅ Successfully registered ${client.commands.size} commands to guild ${guildId}.`
+      );
     } catch (error) {
       console.error("❌ Error registering commands:", error);
     }
