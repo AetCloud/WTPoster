@@ -14,6 +14,7 @@ const {
   getLastPostedImage,
   saveLastPostedImage,
   getWalltakerSettings,
+  fetchWalltakerSettings,
 } = require("./commands/setwalltaker.js");
 
 const TOKEN = process.env.TOKEN;
@@ -68,16 +69,6 @@ for (const file of commandFiles) {
 console.log(`📜 Loaded ${client.commands.size} commands.`);
 
 let lastCheckImages = {};
-
-async function fetchWalltakerSettings() {
-  try {
-    const [rows] = await database.execute("SELECT * FROM walltaker_settings;");
-    return rows;
-  } catch (error) {
-    console.error("❌ MySQL Error (fetchWalltakerSettings):", error);
-    return [];
-  }
-}
 
 async function postWalltakerImages() {
   const settings = await getWalltakerSettings();
@@ -186,14 +177,6 @@ client.once("ready", async () => {
 });
 
 client.login(TOKEN);
-
-database
-  .query("SELECT 1")
-  .then(() => console.log("✅ Connected to MySQL!"))
-  .catch((err) => {
-    console.error("❌ MySQL Connection Error:", err);
-    process.exit(1);
-  });
 
 process.on("unhandledRejection", (reason, promise) => {
   console.error("❌ Unhandled Rejection at:", promise, "reason:", reason);

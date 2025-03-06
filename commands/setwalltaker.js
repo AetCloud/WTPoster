@@ -55,6 +55,16 @@ async function saveLastPostedImage(guildId, imageUrl) {
   }
 }
 
+async function fetchWalltakerSettings() {
+  try {
+    const [rows] = await database.execute("SELECT * FROM walltaker_settings;");
+    return rows;
+  } catch (error) {
+    console.error("❌ MySQL Error (fetchWalltakerSettings):", error);
+    return [];
+  }
+}
+
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("setwalltaker")
@@ -117,5 +127,6 @@ module.exports = {
   getLastPostedImage,
   saveLastPostedImage,
   getWalltakerSettings,
+  fetchWalltakerSettings,
   modulePath: __filename,
 };
