@@ -1,4 +1,4 @@
-const { Client, Collection, GatewayIntentBits } = require("discord.js");
+const { Client, Collection, GatewayIntentBits, REST, Routes } = require("discord.js");
 const fs = require("fs");
 const path = require("path");
 const { ensureTablesExist } = require("./utils/databaseUtils");
