@@ -14,7 +14,6 @@ const {
   getLastPostedImage,
   saveLastPostedImage,
   getWalltakerSettings,
-  fetchWalltakerSettings,
 } = require("./commands/setwalltaker.js");
 
 const TOKEN = process.env.TOKEN;
