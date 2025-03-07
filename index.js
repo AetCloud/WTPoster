@@ -174,6 +174,17 @@ client.once("ready", async () => {
   await ensureTablesExist();
   setInterval(monitorWalltakerChanges, 30 * 1000);
   setInterval(postWalltakerImages, 15 * 60 * 1000);
+
+  const rest = new REST({ version: "10" }).setToken(TOKEN);
+  const commands = client.commands.map((cmd) => cmd.data.toJSON());
+
+  try {
+    console.log(`📜 Registering ${client.commands.size} commands...`);
+    await rest.put(Routes.applicationCommands(CLIENT_ID), { body: commands });
+    console.log(`✅ Successfully registered ${client.commands.size} global commands.`);
+  } catch (error) {
+    console.error("❌ Error registering commands:", error);
+  }
 });
 
 client.login(TOKEN);
