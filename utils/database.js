@@ -61,6 +61,10 @@ async function executeQuery(query, params = []) {
         error.sqlMessage || error.message
       }`
     );
+    if (error.code === 'PROTOCOL_CONNECTION_LOST') {
+      console.log("🔄 Reconnecting to MySQL...");
+      await createDatabasePool();
+    }
     return null;
   }
 }
