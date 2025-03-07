@@ -4,7 +4,6 @@ const { REST, Routes } = require("discord.js");
 
 const clientId = process.env.CLIENT_ID;
 const token = process.env.TOKEN;
-const guildId = "1146990138656825415";
 
 if (!clientId || !token) {
   console.error("❌ Missing CLIENT_ID or TOKEN in environment variables.");
@@ -13,7 +12,7 @@ if (!clientId || !token) {
 
 console.log(`🔑 CLIENT_ID: ${clientId}`);
 console.log(`🔑 TOKEN: ${token ? "Provided" : "Not Provided"}`);
-console.log(`🛠️ Deploying commands to guild ${guildId}...`);
+console.log(`🛠️ Deploying commands globally...`);
 
 function getCommandFiles(dir) {
   let files = [];
@@ -52,28 +51,14 @@ const rest = new REST({ version: "10" }).setToken(token);
 
 (async () => {
   try {
-    console.log(`🚨 Deleting old commands for guild ${guildId}...`);
-    await rest.put(Routes.applicationGuildCommands(clientId, guildId), {
-      body: [],
-    });
-    console.log(`✅ Cleared old commands for guild ${guildId}!`);
+    console.log("🚨 Deleting old global commands...");
+    await rest.put(Routes.applicationCommands(clientId), { body: [] });
+    console.log("✅ Cleared old global commands!");
 
     if (allCommands.length === 0) {
       console.warn("⚠️ No commands found to register. Skipping deployment...");
       return;
     }
-
-    console.log(
-      `🔄 Registering ${allCommands.length} commands for guild ${guildId}...`
-    );
-    await rest.put(Routes.applicationGuildCommands(clientId, guildId), {
-      body: allCommands,
-    });
-    console.log(`✅ Successfully registered commands for guild ${guildId}.`);
-
-    console.log("🚨 Deleting old global commands...");
-    await rest.put(Routes.applicationCommands(clientId), { body: [] });
-    console.log("✅ Cleared old global commands!");
 
     console.log(`🔄 Registering ${allCommands.length} global commands...`);
     await rest.put(Routes.applicationCommands(clientId), { body: allCommands });
